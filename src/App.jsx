@@ -1,73 +1,67 @@
+import { useState, useEffect } from 'react';
+import Hero from './components/Hero';
+import About from './components/About';
+import Domains from './components/Domains';
+import Structure from './components/Structure';
+import Timeline from './components/Timeline';
+import Enroll from './components/Enroll';
+
 function App() {
+  const [toast, setToast] = useState(false);
+
+  const handleStart = () => {
+    setToast(true);
+  };
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(false), 2500);
+    return () => clearTimeout(t);
+  }, [toast]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
-
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
-
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
-
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
+    <div className="min-h-screen bg-slate-950 text-white font-sans">
+      {/* Navbar minimal */}
+      <header className="sticky top-0 z-50 backdrop-blur bg-slate-950/60 border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-gradient-to-br from-fuchsia-500 to-sky-500 shadow-[0_0_24px_rgba(168,85,247,.8)]"></div>
+            <span className="font-semibold">AI Beginner Challenge</span>
           </div>
+          <nav className="hidden sm:flex gap-6 text-sm text-white/70">
+            <a href="#despre" className="hover:text-white">Despre</a>
+            <a href="#domenii" className="hover:text-white">Domenii</a>
+            <a href="#structura" className="hover:text-white">Structură</a>
+            <a href="#timeline" className="hover:text-white">Timeline</a>
+            <a href="#inscrieri" className="hover:text-white">Înscrieri</a>
+          </nav>
+        </div>
+      </header>
 
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
+      <Hero onStart={handleStart} />
 
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
+      <main>
+        <div id="despre"><About /></div>
+        <div id="domenii"><Domains /></div>
+        <div id="structura"><Structure /></div>
+        <div id="timeline"><Timeline /></div>
+        <div id="inscrieri"><Enroll /></div>
+      </main>
 
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
+      <footer className="py-10 text-center text-white/60 text-sm border-t border-white/10">
+        <p>© 2025 AI Beginner Challenge • Website de prezentare</p>
+      </footer>
 
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
+      {/* Toast "În curând" */}
+      {toast && (
+        <div className="fixed inset-0 z-[60] flex items-end justify-center p-4 sm:items-start sm:justify-end">
+          <div className="bg-white/10 border border-white/15 backdrop-blur text-white px-4 py-3 rounded-xl shadow-xl">
+            În curând
           </div>
         </div>
-      </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
